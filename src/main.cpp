@@ -88,14 +88,14 @@ template<typename T>
 void menu() {
 	int dimension = 0;
 	do {
-		cout << "Write determinant dimension: ";
+		cout << "Write linear equation's dimension: ";
 		cin >> dimension;
 		if(cin.fail()) {
 			dimension = 0;
 			fixCin;
 		}
 	} while(dimension <= 0);
-	cout << "Determinant dimension is " << dimension << endl;
+	cout << "Linear equation's dimension is " << dimension << endl;
 	T ** matrix = new T *[dimension];
 	for(int i = 0; i < dimension; i++) {
 		matrix[i] = new T[dimension];
@@ -115,37 +115,40 @@ void menu() {
 		return;
 	}
 
-	T * adding_elements = new T[dimension];
+	T * free_elements = new T[dimension];
         T * temp = new T[dimension];
 
 	for(int i = 0; i < dimension; i++) {
-                cout << "Enter adding element value [" << (i+1) << "]:";
-                adding_elements[i] = get_value<T>();
+                cout << "Enter free element value [" << (i+1) << "]:";
+                free_elements[i] = get_value<T>();
         }
 
 	T *deltas = new T[dimension];
 	for(int i = 0; i < dimension; i++) {
 		for(int j = 0; j < dimension; j++) {
 			temp[j] = matrix[j][i];
-			matrix[j][i] = adding_elements[j];
+			matrix[j][i] = free_elements[j];
 		}
 		cout << "delta" << (i+1) << " = " << endl;
 		print_matr<T>(matrix, dimension);
 		T delta_i = calc_det<T>(matrix, dimension);
-		cout << "equals to" << delta_i << endl;
+		cout << "equals to " << delta_i << endl;
 		deltas[i] = delta_i;
 		for(int j = 0; j < dimension; j++) {
                         matrix[j][i] = temp[j];
                 }
 	}
 
-	cout << "Linear solutions: " << endl;
-
 	for(int i = 0; i < dimension; i++) {
-		cout << "result[" << (i+1) << "] = " << (deltas[i]/delta) << endl;
+		cout << "delta" << (i+1) << " = " << deltas[i] << endl;
+	}
+
+	cout << "Linear solutions: " << endl;
+	for(int i = 0; i < dimension; i++) {
+		cout << "delta" << (i+1) << "/delta = " << (deltas[i]/delta) << endl;
 	}
 	delete[] matrix;
 	delete[] temp;
-	delete[] adding_elements;
+	delete[] free_elements;
 	delete[] deltas;
 }
