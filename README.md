@@ -1,1 +1,1 @@
-Cramar's rule C++ console app
+Cramer's rule C++ console app
